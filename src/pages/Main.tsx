@@ -4,6 +4,9 @@ import {
   currentCategoryState,
   toDoSelector,
 } from "../core/services/atoms";
+import CreateCategory from "../components/CreateCategory";
+import CreateToDo from "../components/CreateToDo";
+import ToDo from "../components/ToDo";
 
 export default function Main() {
   const toDos = useRecoilValue(toDoSelector);
@@ -25,6 +28,13 @@ export default function Main() {
           </option>
         ))}
       </select>
+      <CreateCategory />
+      <hr />
+      <CreateToDo />
+      <hr />
+      {toDos.map((toDo) => (
+        <ToDo key={toDo.id} {...toDo} />
+      ))}
     </div>
   );
 }
