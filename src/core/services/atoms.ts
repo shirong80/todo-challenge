@@ -8,7 +8,7 @@ export const currentCategoryState = atom<string>({
 
 export const categoryState = atom<string[]>({
   key: "category",
-  default: ["TO_DO", "DOING", "DONE"],
+  default: [],
 });
 
 export const toDoState = atom<IToDo[]>({

@@ -1,5 +1,8 @@
 import { Outlet } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { createGlobalStyle } from "styled-components";
+import { categoryState, toDoState } from "./core/services/atoms";
+import { useEffect } from "react";
 
 const GlobalStyle = createGlobalStyle`
   /* fonts import */
@@ -62,6 +65,34 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default function Root() {
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  const [category, setCategory] = useRecoilState(categoryState);
+
+  useEffect(() => {
+    const toDos = localStorage.getItem("toDos");
+    const categories = localStorage.getItem("categories");
+
+    if (toDos) {
+      setToDos(JSON.parse(toDos));
+    }
+
+    if (categories) {
+      setCategory(JSON.parse(categories));
+    }
+  }, [setToDos, setCategory]);
+
+  useEffect(() => {
+    if (toDos.length > 0) {
+      localStorage.setItem("toDos", JSON.stringify(toDos));
+    }
+  }, [toDos]);
+
+  useEffect(() => {
+    if (category.length > 0) {
+      localStorage.setItem("categories", JSON.stringify(category));
+    }
+  }, [category]);
+
   return (
     <div>
       <GlobalStyle />
